@@ -3,7 +3,7 @@ import time
 import pandas as pd
 from datetime import datetime
 
-# 数据
+# Data
 prob = {'blue':0.80128, 'purple':0.16026, 'pink':0.03205, 'red':0.00641}
 missing_link_charm_items = {'red': ['968349','968241'], 'pink':['968019','968301','968223'],
                             'purple':['968239','968192','968154','968248','968182','968172'],
@@ -29,7 +29,7 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
 }
 
-# 计算开箱期望
+# Calculate return
 def calculate_expectation(items, stars_per_collection=1):
     expected_income = 0
     for key, value in items.items():
@@ -58,7 +58,6 @@ def calculate_expectation(items, stars_per_collection=1):
     expected_income /= stars_per_collection  # 按开箱所需星数修正回报
     return round(expected_income, 2)
 
-# 计算并打印每个集合的期望回报
 collections = {
     "Missing Link Charm Items": missing_link_charm_items,
     "Small Arms Charm Items": small_arms_charm_items,
@@ -75,7 +74,7 @@ for collection_name, items in collections.items():
     results.append(expectation)
     print(f"Expectation for {collection_name}: {expectation}")
 
-# 将结果写入文件
+# write to file
 df = pd.DataFrame({
     'Time': [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
     'Missing Link Charm Items': [results[0]],
