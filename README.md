@@ -1,11 +1,11 @@
 # CS2 Market Analyzer
 
-A Python script for analyzing CSGO item collections on buff.163.com, calculating expected returns, and tracking price trends over time.
+A Python script for analyzing CS2 item collections on buff.163.com, calculating expected returns, and tracking price trends over time.
 
 ## Features
 
 - Fetches real-time pricing data from buff.163.com
-- Calculates expected returns for different CSGO collections:
+- Calculates expected returns for different CS2 collections:
   - Missing Link Charm Items
   - Small Arms Charm Items
   - Elemental Craft Stickers Items
