@@ -25,30 +25,27 @@ character_craft_stickers_items = {'red': ['968132','968331'], 'pink':['968194','
                                     '968128','968031','968045','967943','967988','967976',
                                     '967971','968076','967997']}
 
-# 定义请求头，伪装成浏览器
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
 }
 
-# 创建一个函数来计算期望
+# 计算开箱期望
 def calculate_expectation(items, stars_per_collection=1):
     expected_income = 0
     for key, value in items.items():
         for id in value:
-            # 构建 URL
             url = f'https://buff.163.com/api/market/goods/sell_order?game=csgo&goods_id={id}&page_num=1&sort_by=default'
-            for attempt in range(3):  # 最多重试3次
+            for attempt in range(3):
                 try:
                     response = requests.get(url, headers=headers)
                     if response.status_code == 200:
-                        # 解析 JSON 数据
                         data = response.json()
                         if data['data']['items']:
                             price = data['data']['items'][0]['price']
                             expected_income += prob[key] * float(price) / len(value)
                         else:
                             print(f"No items found for goods_id {id}")
-                        break  # 成功后退出重试循环
+                        break
                     else:
                         print(f"Failed to retrieve data for item {id}: {response.status_code}")
                 except requests.exceptions.RequestException as e:
@@ -57,8 +54,8 @@ def calculate_expectation(items, stars_per_collection=1):
             else:
                 print(f"Failed to retrieve data for item {id} after 3 attempts.")
 
-            time.sleep(1)  # 在每个请求之间添加延迟
-    expected_income /= stars_per_collection  # 按星数修正回报
+            time.sleep(1)
+    expected_income /= stars_per_collection  # 按开箱所需星数修正回报
     return round(expected_income, 2)
 
 # 计算并打印每个集合的期望回报
@@ -78,7 +75,7 @@ for collection_name, items in collections.items():
     results.append(expectation)
     print(f"Expectation for {collection_name}: {expectation}")
 
-# 将结果写入 Excel
+# 将结果写入文件
 df = pd.DataFrame({
     'Time': [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
     'Missing Link Charm Items': [results[0]],
@@ -87,7 +84,6 @@ df = pd.DataFrame({
     'Character Craft Stickers Items': [results[3]]
 })
 
-# 写入文件
 file_path = 'result.csv'
 df.to_csv(file_path, mode='a', index=False, header=not pd.io.common.file_exists(file_path))
 print(f"Results written to {file_path}")
