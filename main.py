@@ -55,7 +55,7 @@ def calculate_expectation(items, stars_per_collection=1):
                 print(f"Failed to retrieve data for item {id} after 3 attempts.")
 
             time.sleep(1)
-    expected_income /= stars_per_collection  # 按开箱所需星数修正回报
+    expected_income /= stars_per_collection
     return round(expected_income, 2)
 
 collections = {
@@ -67,7 +67,7 @@ collections = {
 
 results = []
 for collection_name, items in collections.items():
-    # 挂链需要3颗星
+    # 3 stars unlock 1 charm
     stars_per_collection = 3 if "Charm" in collection_name else 1
 
     expectation = calculate_expectation(items, stars_per_collection)
