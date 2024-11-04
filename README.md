@@ -1,4 +1,4 @@
-# CSGO Market Analyzer
+# CS2 Market Analyzer
 
 A Python script for analyzing CSGO item collections on buff.163.com, calculating expected returns, and tracking price trends over time.
 
